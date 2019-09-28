@@ -1,27 +1,25 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.6)
 
-project(dbg_macro)
+include(cmake/cppm_tool.cmake)
+cppm_project()
+include(HunterGate)
+HunterGate(
+   URL "https://github.com/ruslo/hunter/archive/v0.23.214.tar.gz"
+   SHA1 "e14bc153a7f16d6a5eeec845fb0283c8fad8c358"
+)
+project(dbg-macro VERSION 0.0.1 LANGUAGES C CXX)
+cppm_setting()
 
-string(COMPARE EQUAL ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_SOURCE_DIR} IS_MAIN_PROJECT)
-option(DBG_MACRO_ENABLE_TESTS "Enable tests." ${IS_MAIN_PROJECT})
+cppm_cxx_standard(17)
+cppm_compiler_option(DEFAULT)
 
-add_library(${PROJECT_NAME} INTERFACE)
-target_include_directories(${PROJECT_NAME} INTERFACE ".")
 
-if (DBG_MACRO_ENABLE_TESTS)
-    add_executable(${PROJECT_NAME}-example tests/example.cpp)
-    target_compile_options(${PROJECT_NAME}-example PRIVATE -Wall -pedantic -DDBG_MACRO_NO_WARNING)
-    target_link_libraries(${PROJECT_NAME}-example ${PROJECT_NAME})
 
-    add_executable(${PROJECT_NAME}-tests tests/tests.cpp)
-    target_compile_options(${PROJECT_NAME}-tests PRIVATE -Wall -pedantic -DDBG_MACRO_NO_WARNING)
-    target_link_libraries(${PROJECT_NAME}-tests ${PROJECT_NAME})
+cppm_target_define(dbg-macro INTERFACE )
 
-    add_executable(${PROJECT_NAME}-tests-macro_disabled tests/tests.cpp)
-    target_compile_options(${PROJECT_NAME}-tests-macro_disabled PRIVATE -Wall -pedantic -DDBG_MACRO_NO_WARNING -DDBG_MACRO_DISABLE)
-    target_link_libraries(${PROJECT_NAME}-tests-macro_disabled ${PROJECT_NAME})
 
-    enable_testing()
-    add_test(${PROJECT_NAME} ${PROJECT_NAME}-tests)
-    add_test(${PROJECT_NAME}-macro_disabled ${PROJECT_NAME}-tests-macro_disabled)
-endif()
+cppm_target_dependencies(dbg-macro 
+)
+
+cppm_target_install(dbg-macro)
+

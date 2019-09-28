@@ -1,0 +1,9 @@
+[package]
+   name = "dbg-macro"
+   version = "0.0.1"
+   description = ""
+
+[[lib]]
+   name = "dbg-macro"
+   type = "header-only"
+   source = ["include/.*"]
