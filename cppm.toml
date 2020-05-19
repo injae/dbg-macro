@@ -3,7 +3,6 @@
    version = "0.0.1"
    description = ""
 
-[[lib]]
+[lib]
    name = "dbg-macro"
    type = "header-only"
-   source = ["include/.*"]

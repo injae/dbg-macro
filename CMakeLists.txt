@@ -12,7 +12,13 @@ cppm_compiler_option(DEFAULT)
 
 
 
+cppm_target_define(dbg-macro INTERFACE)
+
 
 set(global_deps )
+cppm_target_dependencies(dbg-macro
+   ${global_deps})
 
+
+cppm_target_install(dbg-macro)
 
